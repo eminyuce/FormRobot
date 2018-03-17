@@ -1,4 +1,5 @@
 ﻿using EImece.Domain.Helpers;
+using FormRobot.Domain.Entities;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,49 @@ namespace FormRobot.Domain.Helpers
 {
     public class HtmlAgilityHelper
     {
+        public static string GenerateFormData(string url)
+        {
+            var doc = new HtmlDocument();
+            var htmlResult = DownloadHelper.GetStringFromUrl(url);
+            doc.LoadHtml(htmlResult);
+            Dictionary<String, String> myFormData = new Dictionary<string, string>();
+            myFormData["Eth_Wallet_Address"] = "0x75E352B05d54313358204877496F39b00016c62e";
+            myFormData["Bitcointalk_profile_URL"] = "guvenulu";
+            myFormData["Telegram_Username"] = "guvenulu";
+            myFormData["Personal_Email_Address"] = "prisoner.ever@gmail.com";
+            myFormData["Bitcointalk_username"] = "guvenulu";
+
+            var ppp = new Dictionary<String, AirdropTextbox>();
+
+            var fieldNodes = doc.DocumentNode.ChildNodes;
+            HtmlAgilityHelper.SearchInputForm(fieldNodes, myFormData, ppp);
+            var docForm = new HtmlDocument();
+            String formHtml = "";
+            foreach (var key in ppp.Keys)
+            {
+                if (key.StartsWith("input"))
+                {
+                    // Console.WriteLine(ppp[key]);
+                }
+                else
+                {
+
+                    docForm.LoadHtml(ppp[key].AirdropTextboxHtml);
+                    HtmlNode node = docForm.DocumentNode.ChildNodes[0];
+                    //   Console.WriteLine(node.OuterHtml.Replace(node.InnerHtml,""));
+                    formHtml = node.OuterHtml.Replace(node.InnerHtml, "");
+                }
+
+            }
+            formHtml = formHtml.Replace("</form>", String.Join("<br>", ppp.Where(t => t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray()));
+            formHtml = formHtml + "<input type='submit' value='Send Request'></form>";
+            return formHtml;
+        }
+
         public static void SearchInputForm(
             HtmlNodeCollection fieldNodes,
-            Dictionary<String, String> myFormData, Dictionary<String, String> myFormHtml)
+            Dictionary<String, String> myFormData, 
+            Dictionary<String, AirdropTextbox> myFormHtml)
         {
             foreach (var currentNode in fieldNodes)
             {
@@ -38,14 +79,22 @@ namespace FormRobot.Domain.Helpers
                         {
                             currentNode.Attributes["value"].Value = myFormData["Bitcointalk_username"].ToStr();
                         }
-                        myFormHtml["input_" + currentNode.Attributes["name"].Value] = currentNode.OuterHtml;
+                        var t = new AirdropTextbox() { AirdropTextboxHtml = "<b>" + label + "</b>" + currentNode.OuterHtml };
+                        myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]                            =t;
+
+                    }
+                    else
+                    {
+                        var t = new AirdropTextbox() { AirdropTextboxHtml = currentNode.OuterHtml };
+                        myFormHtml["input_others_" + currentNode.Attributes["name"].Value] =   t ;
 
                     }
 
                 }
                 else if (currentNode.Name == "form")
                 {
-                    myFormHtml["form_" + currentNode.Attributes["action"].Value] = currentNode.OuterHtml;
+                    var t = new AirdropTextbox() { AirdropTextboxHtml = currentNode.OuterHtml };
+                    myFormHtml["form_" + currentNode.Attributes["action"].Value] = t;
                 }
 
             }

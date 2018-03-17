@@ -46,57 +46,13 @@ namespace FormRobot.Tests.Controllers
         {
             // Arrange
             string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
-            string[] fields = new[] { "username" };
-            var doc = new HtmlDocument();
-            var htmlResult = DownloadHelper.GetStringFromUrl(url);
-            doc.LoadHtml(htmlResult);
-            Dictionary<String, String> myFormData = new Dictionary<string, string>();
-            myFormData["Eth_Wallet_Address"] = "0x75E352B05d54313358204877496F39b00016c62e";
-            myFormData["Bitcointalk_profile_URL"] = "guvenulu";
-            myFormData["Telegram_Username"] = "guvenulu";
-            myFormData["Personal_Email_Address"] = "prisoner.ever@gmail.com";
-            myFormData["Bitcointalk_username"] = "guvenulu";
-   
-            var ppp = new Dictionary<String, String>();
 
-           var fieldNodes = doc.DocumentNode.ChildNodes;
-            foreach (var field in fields)
-            {
-                HtmlAgilityHelper.SearchInputForm(fieldNodes, myFormData, ppp);
-            }
-            foreach (var key in ppp.Keys)
-            {
-                if (key.StartsWith("input"))
-                {
-                    Console.WriteLine(ppp[key]);
-                }else
-                {
-                    Console.WriteLine(ppp[key]);
-                }
-              
-            }
+            HtmlAgilityHelper.GenerateFormData(url);
             //
 
 
         }
 
         
-
-        public  HtmlNode FindCorrespondingInputNode(HtmlTextNode fieldNode)
-        {
-            for (var currentNode = fieldNode.NextSibling;
-                 currentNode != null && currentNode.NodeType != HtmlNodeType.Text;
-                 currentNode = currentNode.NextSibling)
-            {
-                if (currentNode.Name == "input"
-                 && !currentNode.Attributes["type"].Value.Contains("hidden"))
-                {
-                    return currentNode;
-                }
-            }
-            return null;
-        }
-
-
     }
 }

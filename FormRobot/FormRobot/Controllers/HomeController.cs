@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FormRobot.Domain.Entities;
 
 namespace FormRobot.Controllers
 {
@@ -13,10 +14,9 @@ namespace FormRobot.Controllers
         {
             // Arrange
             string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
-            string[] fields = new[] { "username" };
-            var pp = HtmlAgilityHelper.GetInputNodes(url, fields);
-
-            return View();
+            var newAirDropHtml = new AirDropForm();
+            newAirDropHtml.AirDropUrl = url;
+            return View(newAirDropHtml);
         }
 
         public ActionResult About()
