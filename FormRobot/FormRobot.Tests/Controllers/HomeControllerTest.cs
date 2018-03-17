@@ -9,6 +9,7 @@ using FormRobot.Controllers;
 using HtmlAgilityPack;
 using FormRobot.Domain.Helpers;
 using EImece.Domain.Helpers;
+using FormRobot.Domain.Entities;
 
 namespace FormRobot.Tests.Controllers
 {
@@ -46,8 +47,13 @@ namespace FormRobot.Tests.Controllers
         {
             // Arrange
             string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
-
-            HtmlAgilityHelper.GenerateFormData(url);
+            var myFormData = new UserFormData();
+            myFormData.EthWalletAddress = "0x75E352B05d54313358204877496F39b00016c62e";
+            myFormData.BitcointalkProfileURL = "guvenulu";
+            myFormData.TelegramUsername= "guvenulu";
+            myFormData.PersonalEmailAddress = "prisoner.ever@gmail.com";
+            myFormData.BitcointalkUsername = "guvenulu";
+            HtmlAgilityHelper.GenerateFormData(url, myFormData);
             //
 
 

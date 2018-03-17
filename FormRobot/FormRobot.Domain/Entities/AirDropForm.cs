@@ -9,13 +9,15 @@ namespace FormRobot.Domain.Entities
 {
     public class AirDropForm
     {
+        public UserFormData myFormData { get; set; }
+
         public string AirDropUrl { get; set; }
 
         public string AirDropFormHtml
         {
             get
             {
-                return HtmlAgilityHelper.GenerateFormData(AirDropUrl);
+                return HtmlAgilityHelper.GenerateFormData(AirDropUrl, myFormData);
             }
         }
     }

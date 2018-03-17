@@ -16,6 +16,13 @@ namespace FormRobot.Controllers
             string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
             var newAirDropHtml = new AirDropForm();
             newAirDropHtml.AirDropUrl = url;
+            var myFormData = new UserFormData();
+            myFormData.EthWalletAddress = "0x75E352B05d54313358204877496F39b00016c62e";
+            myFormData.BitcointalkProfileURL = "guvenulu";
+            myFormData.TelegramUsername = "guvenulu";
+            myFormData.PersonalEmailAddress = "prisoner.ever@gmail.com";
+            myFormData.BitcointalkUsername = "guvenulu";
+            newAirDropHtml.myFormData = myFormData;
             return View(newAirDropHtml);
         }
 

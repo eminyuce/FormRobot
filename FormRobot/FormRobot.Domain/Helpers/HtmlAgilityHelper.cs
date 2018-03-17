@@ -11,22 +11,17 @@ namespace FormRobot.Domain.Helpers
 {
     public class HtmlAgilityHelper
     {
-        public static string GenerateFormData(string url)
+        public static string GenerateFormData(string url, UserFormData userData)
         {
             var doc = new HtmlDocument();
             var htmlResult = DownloadHelper.GetStringFromUrl(url);
             doc.LoadHtml(htmlResult);
-            Dictionary<String, String> myFormData = new Dictionary<string, string>();
-            myFormData["Eth_Wallet_Address"] = "0x75E352B05d54313358204877496F39b00016c62e";
-            myFormData["Bitcointalk_profile_URL"] = "guvenulu";
-            myFormData["Telegram_Username"] = "guvenulu";
-            myFormData["Personal_Email_Address"] = "prisoner.ever@gmail.com";
-            myFormData["Bitcointalk_username"] = "guvenulu";
+     
 
             var ppp = new Dictionary<String, AirdropTextbox>();
 
             var fieldNodes = doc.DocumentNode.ChildNodes;
-            HtmlAgilityHelper.SearchInputForm(fieldNodes, myFormData, ppp);
+            HtmlAgilityHelper.SearchInputForm(fieldNodes, userData, ppp);
             var docForm = new HtmlDocument();
             String formHtml = "";
             foreach (var key in ppp.Keys)
@@ -52,7 +47,7 @@ namespace FormRobot.Domain.Helpers
 
         public static void SearchInputForm(
             HtmlNodeCollection fieldNodes,
-            Dictionary<String, String> myFormData, 
+            UserFormData myFormData, 
             Dictionary<String, AirdropTextbox> myFormHtml)
         {
             foreach (var currentNode in fieldNodes)
@@ -62,22 +57,23 @@ namespace FormRobot.Domain.Helpers
                 {
                     if (currentNode.Attributes.Any(t => t.Name.Equals("aria-label")))
                     {
+                        //, UserFormData userData
                         string label = currentNode.Attributes["aria-label"].Value.ToStr();
                         if (label.ToLower().Contains("ERC-20 wallet address".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData["Eth_Wallet_Address"].ToStr();
+                            currentNode.Attributes["value"].Value = myFormData.EthWalletAddress; //myFormData["Eth_Wallet_Address"].ToStr();
                         }
                         else if (label.ToLower().Contains("Telegram Username".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData["Telegram_Username"].ToStr();
+                            currentNode.Attributes["value"].Value = myFormData.TelegramUsername; // myFormData["Telegram_Username"].ToStr();
                         }
                         else if (label.ToLower().Contains("Bitcointalk profile URL".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData["Telegram_Username"].ToStr();
+                            currentNode.Attributes["value"].Value = myFormData.BitcointalkProfileURL;
                         }
                         else if (label.ToLower().Contains("Bitcointalk username".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData["Bitcointalk_username"].ToStr();
+                            currentNode.Attributes["value"].Value = myFormData.BitcointalkUsername;
                         }
                         var t = new AirdropTextbox() { AirdropTextboxHtml = "<b>" + label + "</b>" + currentNode.OuterHtml };
                         myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]                            =t;
