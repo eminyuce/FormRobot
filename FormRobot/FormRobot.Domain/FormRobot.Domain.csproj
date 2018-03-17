@@ -82,30 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Helpers\Base32Custom.cs">
-      <Link>Helpers\Base32Custom.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Helpers\Convert.cs">
-      <Link>Helpers\Convert.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Helpers\DownloadHelper.cs">
-      <Link>Helpers\DownloadHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Helpers\GeneralHelper.cs">
-      <Link>Helpers\GeneralHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Models\Enums\EImeceImageType.cs">
-      <Link>Entities\EImeceImageType.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Models\Enums\EImeceItemType.cs">
-      <Link>Entities\EImeceItemType.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Models\Enums\EImeceLanguage.cs">
-      <Link>Entities\EImeceLanguage.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Models\Enums\MediaModType.cs">
-      <Link>Entities\MediaModType.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Settings.cs">
       <Link>Settings.cs</Link>
     </Compile>
@@ -115,8 +91,16 @@
     <Compile Include="DB\DBDirectory.cs" />
     <Compile Include="Entities\AirDropForm.cs" />
     <Compile Include="Entities\AirdropTextbox.cs" />
+    <Compile Include="Entities\EImeceImageType.cs" />
+    <Compile Include="Entities\EImeceItemType.cs" />
+    <Compile Include="Entities\EImeceLanguage.cs" />
+    <Compile Include="Entities\MediaModType.cs" />
     <Compile Include="Entities\UserFormData.cs" />
+    <Compile Include="Helpers\Base32Custom.cs" />
+    <Compile Include="Helpers\Convert.cs" />
+    <Compile Include="Helpers\DownloadHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\GeneralHelper.cs" />
     <Compile Include="Helpers\HtmlAgilityHelper.cs" />
     <Compile Include="Helpers\PartialViewToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
