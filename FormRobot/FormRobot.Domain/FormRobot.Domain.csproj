@@ -85,9 +85,7 @@
     <Compile Include="..\..\..\..\GitHub\EImece\EImece\EImece.Domain\Settings.cs">
       <Link>Settings.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\EImece\EImece\EImece.Domain\DbContext\DatabaseUtility.cs">
-      <Link>DB\DatabaseUtility.cs</Link>
-    </Compile>
+    <Compile Include="DB\DatabaseUtility.cs" />
     <Compile Include="DB\DBDirectory.cs" />
     <Compile Include="Entities\AirDropForm.cs" />
     <Compile Include="Entities\AirdropTextbox.cs" />
