@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FormRobot.Domain.Entities;
+using EImece.Domain.Helpers;
 
 namespace FormRobot.Controllers
 {
@@ -12,25 +13,30 @@ namespace FormRobot.Controllers
     {
         public ActionResult Index()
         {
-            // Arrange
-            string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
-            var newAirDropHtml = new AirDropForm();
-            newAirDropHtml.AirDropUrl = url;
-            var myFormData = new UserFormData();
-            myFormData.EthWalletAddress = "0x75E352B05d54313358204877496F39b00016c62e";
-            myFormData.BitcointalkProfileURL = "guvenulu";
-            myFormData.TelegramUsername = "guvenulu";
-            myFormData.PersonalEmailAddress = "prisoner.ever@gmail.com";
-            myFormData.BitcointalkUsername = "guvenulu";
-            newAirDropHtml.myFormData = myFormData;
-            return View(newAirDropHtml);
+            //Arrange
+            //Airdrop table storing URLs
+            // User  
+           
+            return View();
         }
 
-        public ActionResult About()
+        public ActionResult GetAirDropHtmlPage(string airDropLink)
         {
-            ViewBag.Message = "Your application description page.";
+            var newAirDropHtml = new AirDropForm();
+            newAirDropHtml.AirDropUrl = airDropLink;
+            var myFormData = new UserFormData();
+            myFormData.EthWalletAddress = "";
+            myFormData.BitcointalkProfileURL = "";
+            myFormData.TelegramUsername = "";
+            myFormData.PersonalEmailAddress = "";
+            myFormData.BitcointalkUsername = "";
+            newAirDropHtml.myFormData = myFormData;
 
-            return View();
+            var tempData = new TempDataDictionary();
+            var html = this.RenderPartialToString(
+                        @"~/Views/Shared/pAirDropForm.cshtml",
+                        new ViewDataDictionary(newAirDropHtml), tempData);
+            return Json(html, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Contact()

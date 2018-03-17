@@ -29,31 +29,22 @@ namespace FormRobot.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
+      
 
         [TestMethod]
         public void Contact()
         {
             // Arrange
-            string url = "https://docs.google.com/forms/d/e/1FAIpQLSfaTavUqVi5LG7jsxaYwi-AGv0lY4ZRcVB6Vs1A1q0U6ykpGw/viewform";
+            string url = "https://docs.google.com/forms/d/e/1FAIpQLSewSjh96ZhRqi-In85XYd0rW0_79fXfk_0VO7RpYtoO-aV97g/viewform";
             var myFormData = new UserFormData();
             myFormData.EthWalletAddress = "0x75E352B05d54313358204877496F39b00016c62e";
             myFormData.BitcointalkProfileURL = "guvenulu";
             myFormData.TelegramUsername= "guvenulu";
             myFormData.PersonalEmailAddress = "prisoner.ever@gmail.com";
             myFormData.BitcointalkUsername = "guvenulu";
-            HtmlAgilityHelper.GenerateFormData(url, myFormData);
+            var htmlOutput = HtmlAgilityHelper.GenerateFormData(url, myFormData);
+
+            Console.WriteLine(htmlOutput);
             //
 
 

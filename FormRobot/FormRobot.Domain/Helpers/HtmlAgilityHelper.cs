@@ -53,7 +53,7 @@ namespace FormRobot.Domain.Helpers
             foreach (var currentNode in fieldNodes)
             {
                 SearchInputForm(currentNode.ChildNodes, myFormData, myFormHtml);
-                if (currentNode.Name == "input")
+                if (currentNode.Name == "input" || currentNode.Name == "textarea")
                 {
                     if (currentNode.Attributes.Any(t => t.Name.Equals("aria-label")))
                     {
@@ -61,19 +61,20 @@ namespace FormRobot.Domain.Helpers
                         string label = currentNode.Attributes["aria-label"].Value.ToStr();
                         if (label.ToLower().Contains("ERC-20 wallet address".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData.EthWalletAddress; //myFormData["Eth_Wallet_Address"].ToStr();
+                            setValue(myFormData.EthWalletAddress, currentNode);
                         }
                         else if (label.ToLower().Contains("Telegram Username".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData.TelegramUsername; // myFormData["Telegram_Username"].ToStr();
+                            setValue(myFormData.TelegramUsername, currentNode);
+                           // myFormData["Telegram_Username"].ToStr();
                         }
                         else if (label.ToLower().Contains("Bitcointalk profile URL".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData.BitcointalkProfileURL;
+                            setValue(myFormData.BitcointalkProfileURL, currentNode);
                         }
                         else if (label.ToLower().Contains("Bitcointalk username".ToLower()))
                         {
-                            currentNode.Attributes["value"].Value = myFormData.BitcointalkUsername;
+                            setValue(myFormData.BitcointalkUsername, currentNode);
                         }
                         var t = new AirdropTextbox() { AirdropTextboxHtml = "<b>" + label + "</b>" + currentNode.OuterHtml };
                         myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]                            =t;
@@ -95,6 +96,19 @@ namespace FormRobot.Domain.Helpers
 
             }
         }
+
+        private static void setValue(String myFormData, HtmlNode currentNode)
+        {
+            if (currentNode.Name == "input")
+            {
+                currentNode.Attributes["value"].Value = myFormData;
+            }
+            else if ( currentNode.Name == "textarea")
+            {
+                currentNode.InnerHtml = myFormData;
+            }
+        }
+
         public static IEnumerable<Tuple<string, HtmlNode>> GetInputNodes(string url, params string[] fields)
         {
             var doc = new HtmlDocument();

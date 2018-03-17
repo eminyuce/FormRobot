@@ -1,6 +1,8 @@
-﻿@model  FormRobot.Domain.Entities.AirDropForm
+﻿ 
 @{
     ViewBag.Title = "Home Page";
 }
+<button type="button" id="GetAirDropForm">GetAirDropForm</button>
+<input type="text" id="airDropLinkTxt"/>
 
-@Html.Raw(Model.AirDropFormHtml);
+<span id="airDropHtmlPage"></span>

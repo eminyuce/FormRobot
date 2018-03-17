@@ -118,6 +118,7 @@
     <Compile Include="Entities\UserFormData.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\HtmlAgilityHelper.cs" />
+    <Compile Include="Helpers\PartialViewToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
