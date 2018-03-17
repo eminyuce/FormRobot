@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormRobot", "FormRobot\FormRobot.csproj", "{1B4885AF-5362-45A8-A3A1-8600E9458E1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormRobot.Tests", "FormRobot.Tests\FormRobot.Tests.csproj", "{D7708593-FD72-499E-9F92-A8DA3B1F58CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormRobot.Domain", "FormRobot.Domain\FormRobot.Domain.csproj", "{12A28927-F777-419E-93D0-562C557AB6AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B4885AF-5362-45A8-A3A1-8600E9458E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4885AF-5362-45A8-A3A1-8600E9458E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4885AF-5362-45A8-A3A1-8600E9458E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4885AF-5362-45A8-A3A1-8600E9458E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7708593-FD72-499E-9F92-A8DA3B1F58CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7708593-FD72-499E-9F92-A8DA3B1F58CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7708593-FD72-499E-9F92-A8DA3B1F58CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7708593-FD72-499E-9F92-A8DA3B1F58CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12A28927-F777-419E-93D0-562C557AB6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A28927-F777-419E-93D0-562C557AB6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A28927-F777-419E-93D0-562C557AB6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A28927-F777-419E-93D0-562C557AB6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
