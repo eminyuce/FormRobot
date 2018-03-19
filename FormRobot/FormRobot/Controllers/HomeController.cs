@@ -65,18 +65,18 @@ namespace FormRobot.Controllers
         {
             var emptyObj = new UserFormData();
             emptyObj.EthWalletAddress = "EthWalletAddress";
-            emptyObj.BitcointalkProfileURL = "BitcointalkProfileURL";
-            emptyObj.TelegramUsername = "TelegramUsername";
-            emptyObj.BitcointalkUsername = "BitcointalkUsername";
-            emptyObj.PersonalEmailAddress = "PersonalEmailAddress";
-            emptyObj.FacebookName = "FacebookName";
-            emptyObj.MediumProfileURL = "MediumProfileURL";
-            emptyObj.FacebookProfileURL = "FacebookProfileURL";
-            emptyObj.TwitterUsername = "TwitterUsername";
-            emptyObj.TwitterProfileURL = "TwitterProfileURL";
-            emptyObj.YourSkills = "YourSkills";
-            emptyObj.YourLanguage = "YourLanguage";
-            emptyObj.YourHelps = "YourHelps";
+            emptyObj.BitcointalkProfileURL = "Bitcointalk Profile URL";
+            emptyObj.TelegramUsername = "Telegram Username";
+            emptyObj.BitcointalkUsername = "Bitcointalk User name";
+            emptyObj.PersonalEmailAddress = "Personal Email Address";
+            emptyObj.FacebookName = "Facebook Name";
+            emptyObj.MediumProfileURL = "Medium Profile URL";
+            emptyObj.FacebookProfileURL = "Facebook Profile URL";
+            emptyObj.TwitterUsername = "Twitter Username";
+            emptyObj.TwitterProfileURL = "Twitter Profile URL";
+            emptyObj.YourSkills = "Your Skills";
+            emptyObj.YourLanguage = "Your Language";
+            emptyObj.YourHelps = "Your Helps";
 
 
             var emptyObjXml = XmlParserHelper.ToXml<UserFormData>(emptyObj);
@@ -84,17 +84,19 @@ namespace FormRobot.Controllers
             {
                 var user = context.UserProfiles.FirstOrDefault(t => t.UserName.Equals(User.Identity.Name));
                 user.UserData = String.IsNullOrEmpty(user.UserData.ToStr()) ? emptyObjXml : user.UserData;
-                return View(user);
+                var result = XmlParserHelper.ToObject<UserFormData>(user.UserData);
+                result.UserId = user.UserId;
+                return View(result);
             }
 
         }
         [HttpPost]
-        public ActionResult UserData(UserProfile profile)
+        public ActionResult UserData(UserFormData profile, int id=0)
         {
             using (var context = new UsersContext())
             {
-                var user = context.UserProfiles.FirstOrDefault(t => t.UserName.Equals(User.Identity.Name));
-                user.UserData = profile.UserData;
+                var user = context.UserProfiles.FirstOrDefault(t => t.UserId == profile.UserId);
+                user.UserData = XmlParserHelper.ToXml<UserFormData>(profile);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }

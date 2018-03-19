@@ -4,11 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace FormRobot.Domain.Entities
 {
     public class UserFormData
     {
+        [XmlIgnore]
+        public int UserId { get; set; }
         public String EthWalletAddress { get; set; }
         public String BitcointalkProfileURL { get; set; }
         public String TelegramUsername { get; set; }

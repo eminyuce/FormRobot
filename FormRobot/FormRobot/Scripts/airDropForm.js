@@ -1,12 +1,20 @@
-﻿
+﻿function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
 $(document).ready(function () {
     $("#GetAirDropForm").click(function () {
-        $("#airDropHtmlPage").html("<h3>WAIT A SECOND PLEASE<h3>");
+
         var airDropLink = $("#airDropLinkTxt").val();
-        var postData = JSON.stringify({ "airDropLink": airDropLink });
-        ajaxMethodCall(postData, "/Home/GetAirDropHtmlPage", function (data) {
-            $("#airDropHtmlPage").html(data);
-        });
+        if (isEmpty(airDropLink)) {
+            $("#airDropHtmlPage").html("<h3>No AIRDROP link has been provided<h3>");
+        } else {
+            $("#airDropHtmlPage").html("<h3>WAIT A SECOND PLEASE<h3>");
+            var postData = JSON.stringify({ "airDropLink": airDropLink });
+            ajaxMethodCall(postData, "/Home/GetAirDropHtmlPage", function (data) {
+                $("#airDropHtmlPage").html(data);
+            });
+        }
+       
     });
 });
 

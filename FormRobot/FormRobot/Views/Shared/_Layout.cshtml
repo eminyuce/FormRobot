@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/airDropForm.js?v=1"></script>
+    <script src="~/Scripts/airDropForm.js?v=3"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -19,14 +19,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Airdrop Robot", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("UserData", "UserData", "Home")</li>
-                    <li>@Html.ActionLink("FormMatches", "FormMatchs", "Home")</li>
-                    <li>@Html.ActionLink("AirDropLinkPage", "AirDropLinkPage", "Home")</li>
+                    <li>@Html.ActionLink("Your Data", "UserData", "Home")</li>
+                    <li>@Html.ActionLink("Key Word Matching", "FormMatchs", "Home")</li>
+                    <li>@Html.ActionLink("AirDrop Links", "AirDropLinkPage", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
