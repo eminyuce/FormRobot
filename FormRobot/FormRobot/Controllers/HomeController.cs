@@ -28,9 +28,13 @@ namespace FormRobot.Controllers
             var items = AirDropLinkRepository.GetAirDropLinks();
             return View(items);
         }
-        public ActionResult FormMatchs()
+        public ActionResult FormMatchs(string search="")
         {
             var formMatches = FormMatchRepository.GetFormMatchs();
+            if (!String.IsNullOrEmpty(search))
+            {
+                formMatches = formMatches.Where(t => t.FormItemText.ToLower().Contains(search.ToLower())).ToList();
+            }
             return View(formMatches);
         }
         public ActionResult FormMatchItem(int id = 0)
@@ -90,7 +94,7 @@ namespace FormRobot.Controllers
                 var user = context.UserProfiles.FirstOrDefault(t => t.UserName.Equals(User.Identity.Name));
                 user.UserData = profile.UserData;
                 context.SaveChanges();
-                return View(user);
+                return RedirectToAction("Index");
             }
 
         }

@@ -283,6 +283,7 @@
     <Content Include="Views\Home\FormMatchs.cshtml" />
     <Content Include="Views\Home\FormMatchItem.cshtml" />
     <Content Include="Views\Home\AirDropLinkPage.cshtml" />
+    <Content Include="Views\Shared\pSearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

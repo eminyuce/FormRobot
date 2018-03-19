@@ -1,15 +1,22 @@
 ﻿@model IEnumerable<FormRobot.Domain.Entities.FormMatch>
 
 @{
-    ViewBag.Title = "FormMatchs";
+    ViewBag.Title = "FormMatches";
 }
 
-<h2>FormMatchs</h2>
-
+<h2>FormMatches</h2>
+<b style="color:red; font-size:x-large">
+    Anahtar kelime ile kullanici datasi ESLESTIRME tablosu <br />
+    Eslestirme UserData her bir veri ile FormItemText arasinda yapiliyor.<br />
+    Eger tabloda yok ise elestirme gerceklesmiyor.<br />
+    Ornek olarak : "ERC-20 wallet address" FormItemText aslinda "EthWalletAddress" anahtar kelimesi.
+</b>
 <p>
-    @Html.ActionLink("Create New", "FormMatchItem")
+    @Html.ActionLink("Create New", "FormMatchItem",null,new { @class="btn btn-info" })
 </p>
-<table class="table">
+@Html.Partial("pSearchForm")
+
+<table class='table table-hover table-bordered table-striped'>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FormItemText)
@@ -20,18 +27,19 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FormItemText)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FormItemKey)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "FormMatchItem", new { id=item.FormMatchId }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormItemText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormItemKey)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "FormMatchItem", new { id = item.FormMatchId }, new { @class = "btn btn-warning" })
+            </td>
+        </tr>
+    }
 
 </table>

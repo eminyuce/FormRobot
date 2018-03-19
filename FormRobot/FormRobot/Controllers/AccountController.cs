@@ -7,7 +7,7 @@ using WebMatrix.WebData;
 namespace FormRobot.Controllers
 {
     [Authorize]
-    //[InitializeSimpleMembership]
+    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -28,7 +28,7 @@ namespace FormRobot.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-
+     
             if (ModelState.IsValid && Membership.ValidateUser(model.UserName, model.Password))
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);

@@ -5,7 +5,7 @@
 }
 
 <h2>AirDropLinkPage</h2>
-<table class="table">
+<table class='table table-hover table-bordered table-striped'>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.AirDropLinkUrl)
@@ -13,12 +13,13 @@
 
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AirDropLinkUrl)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirDropLinkUrl)
+            </td>
+        </tr>
+    }
 
 </table>

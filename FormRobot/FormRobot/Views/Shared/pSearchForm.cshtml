@@ -1,0 +1,41 @@
+﻿@using HelpersProject
+
+@{
+
+    string action = ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
+    string controller = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    string search = @Request.QueryString["search"];
+}
+
+@using (Html.BeginForm(action, controller, FormMethod.Get, new { @class = "" }))
+{
+
+
+    <div class="row">
+        <div class="col-md-8 col-xs-7">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search" value="@search" />
+
+            </div>
+        </div>
+        @if (!String.IsNullOrEmpty(search))
+                {
+            <div class="col-md-2 col-xs-3">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                @Html.ActionLink("Clear", action, controller, new { search = "", id = "" }, new { @class = "btn btn-warning btn-block" })
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4 col-xs-5">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </div>
+
+        }
+
+    </div>
+
+
+}
