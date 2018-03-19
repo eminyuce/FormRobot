@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FormRobot.Domain.Entities.AirDropLink>
+
+@{
+    ViewBag.Title = "AirDropLinkPage";
+}
+
+<h2>AirDropLinkPage</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AirDropLinkUrl)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AirDropLinkUrl)
+        </td>
+    </tr>
+}
+
+</table>

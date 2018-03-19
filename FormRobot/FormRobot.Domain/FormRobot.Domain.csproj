@@ -82,13 +82,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\AirDropLinkRepository.cs" />
     <Compile Include="DB\DatabaseUtility.cs" />
     <Compile Include="DB\DBDirectory.cs" />
+    <Compile Include="DB\FormMatchRepository.cs" />
     <Compile Include="Entities\AirDropForm.cs" />
+    <Compile Include="Entities\AirDropLink.cs" />
     <Compile Include="Entities\AirdropTextbox.cs" />
     <Compile Include="Entities\EImeceImageType.cs" />
     <Compile Include="Entities\EImeceItemType.cs" />
     <Compile Include="Entities\EImeceLanguage.cs" />
+    <Compile Include="Entities\FormMatch.cs" />
     <Compile Include="Entities\MediaModType.cs" />
     <Compile Include="Entities\UserFormData.cs" />
     <Compile Include="Helpers\Base32Custom.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="Helpers\GeneralHelper.cs" />
     <Compile Include="Helpers\HtmlAgilityHelper.cs" />
     <Compile Include="Helpers\PartialViewToString.cs" />
+    <Compile Include="Helpers\XmlParserHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

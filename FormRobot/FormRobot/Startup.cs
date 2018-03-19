@@ -10,7 +10,7 @@ namespace FormRobot
         {
 
             
-            ConfigureAuth(app);
+     
         }
     }
 }

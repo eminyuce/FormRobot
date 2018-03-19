@@ -19,12 +19,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace EImece.Domain.Helpers
 {
     public class GeneralHelper
     {
-        
+        public static string FormatXml(string xml)
+        {
+            try
+            {
+                XDocument doc = XDocument.Parse(xml);
+                return doc.ToString();
+            }
+            catch (Exception)
+            {
+                return xml;
+            }
+        }
         public static void SetCultureCookie(HttpResponseBase request, String cultureCookieName, string cultureName = "")
         {
             if (String.IsNullOrEmpty(cultureName))

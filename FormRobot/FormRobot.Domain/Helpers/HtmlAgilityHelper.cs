@@ -1,4 +1,5 @@
 ﻿using EImece.Domain.Helpers;
+using FormRobot.Domain.DB;
 using FormRobot.Domain.Entities;
 using HtmlAgilityPack;
 using System;
@@ -40,7 +41,7 @@ namespace FormRobot.Domain.Helpers
                 }
 
             }
-            formHtml = formHtml.Replace("</form>", String.Join("<br>", ppp.Where(t => t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray()));
+            formHtml = formHtml.Replace("</form>", String.Join("<br><br>", ppp.Where(t => t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray()));
             formHtml = formHtml + "<input type='submit' value='Send Request'></form>";
             return formHtml;
         }
@@ -50,6 +51,7 @@ namespace FormRobot.Domain.Helpers
             UserFormData myFormData, 
             Dictionary<String, AirdropTextbox> myFormHtml)
         {
+            var allFormKeyItems = FormMatchRepository.GetFormMatchsFromCache();
             foreach (var currentNode in fieldNodes)
             {
                 SearchInputForm(currentNode.ChildNodes, myFormData, myFormHtml);
@@ -59,25 +61,20 @@ namespace FormRobot.Domain.Helpers
                     {
                         //, UserFormData userData
                         string label = currentNode.Attributes["aria-label"].Value.ToStr();
-                        if (label.ToLower().Contains("ERC-20 wallet address".ToLower()))
+                    
+                  
+                        var item = allFormKeyItems.FirstOrDefault(r => label.ToLower().Contains(r.FormItemText.ToLower()));
+                        if (item != null)
                         {
-                            setValue(myFormData.EthWalletAddress, currentNode);
+                            var property = myFormData.GetType().GetProperty(item.FormItemKey.ToStr().Trim());
+                            string s = property.GetValue(myFormData, null) as string;
+                           // property.SetValue(myFormData, System.Convert.ChangeType(s.ToStr().Trim(), property.PropertyType), null);
+                            setFormValue(s.ToStr().Trim(), currentNode);
                         }
-                        else if (label.ToLower().Contains("Telegram Username".ToLower()))
-                        {
-                            setValue(myFormData.TelegramUsername, currentNode);
-                           // myFormData["Telegram_Username"].ToStr();
-                        }
-                        else if (label.ToLower().Contains("Bitcointalk profile URL".ToLower()))
-                        {
-                            setValue(myFormData.BitcointalkProfileURL, currentNode);
-                        }
-                        else if (label.ToLower().Contains("Bitcointalk username".ToLower()))
-                        {
-                            setValue(myFormData.BitcointalkUsername, currentNode);
-                        }
+                     
+
                         var t = new AirdropTextbox() { AirdropTextboxHtml = "<b>" + label + "</b>" + currentNode.OuterHtml };
-                        myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]                            =t;
+                        myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]  =t;
 
                     }
                     else
@@ -97,7 +94,7 @@ namespace FormRobot.Domain.Helpers
             }
         }
 
-        private static void setValue(String myFormData, HtmlNode currentNode)
+        private static void setFormValue(String myFormData, HtmlNode currentNode)
         {
             if (currentNode.Name == "input")
             {
