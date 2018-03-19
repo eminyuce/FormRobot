@@ -116,7 +116,6 @@ namespace FormRobot.Controllers
             }
 
             AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim() });
-
             newAirDropHtml.myFormData = myFormData;
 
             var tempData = new TempDataDictionary();

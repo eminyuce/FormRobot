@@ -1,6 +1,7 @@
 ﻿using EImece.Domain.Helpers;
 using FormRobot.Domain.DB;
 using FormRobot.Domain.Entities;
+using FormRobot.Domain.Entities.AirDropType;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,11 @@ namespace FormRobot.Domain.Helpers
                 }
 
             }
-            formHtml = formHtml.Replace("</form>", String.Join("<br><br>", ppp.Where(t => t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray()));
-            formHtml = formHtml + "<input type='submit' value='Send Request'></form>";
+            var htmlFormInput = String.Join("<br>", ppp.Where(t => t.Value.AirdropType != AirdropComponentType.Hidden && t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray());
+            htmlFormInput = htmlFormInput + String.Join("", ppp.Where(t => t.Value.AirdropType == AirdropComponentType.Hidden && t.Key.StartsWith("input")).Select(x => x.Value.AirdropTextboxHtml).ToArray());
+
+            formHtml = formHtml.Replace("</form>", htmlFormInput);
+            formHtml = formHtml + "<br><input type='submit' class='btn btn-success btn-lg btn-block' value='Submit AIR DROP Form'></form>";
             return formHtml;
         }
 
@@ -57,6 +61,7 @@ namespace FormRobot.Domain.Helpers
                 SearchInputForm(currentNode.ChildNodes, myFormData, myFormHtml);
                 if (currentNode.Name == "input" || currentNode.Name == "textarea")
                 {
+
                     if (currentNode.Attributes.Any(t => t.Name.Equals("aria-label")))
                     {
                         //, UserFormData userData
@@ -71,9 +76,18 @@ namespace FormRobot.Domain.Helpers
                            // property.SetValue(myFormData, System.Convert.ChangeType(s.ToStr().Trim(), property.PropertyType), null);
                             setFormValue(s.ToStr().Trim(), currentNode);
                         }
-                     
 
                         var t = new AirdropTextbox() { AirdropTextboxHtml = "<b>" + label + "</b>" + currentNode.OuterHtml };
+                        if (currentNode.Name == "input")
+                        {
+                            t.AirdropType = AirdropComponentType.Textbox;
+                        }
+                        else
+                        {
+                            t.AirdropType = AirdropComponentType.Textarea;
+                        }  
+                    
+
                         myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]  =t;
 
                     }
@@ -81,7 +95,7 @@ namespace FormRobot.Domain.Helpers
                     {
                         var t = new AirdropTextbox() { AirdropTextboxHtml = currentNode.OuterHtml };
                         myFormHtml["input_others_" + currentNode.Attributes["name"].Value] =   t ;
-
+                        t.AirdropType = Entities.AirDropType.AirdropComponentType.Hidden;
                     }
 
                 }
@@ -89,6 +103,7 @@ namespace FormRobot.Domain.Helpers
                 {
                     var t = new AirdropTextbox() { AirdropTextboxHtml = currentNode.OuterHtml };
                     myFormHtml["form_" + currentNode.Attributes["action"].Value] = t;
+                    t.AirdropType = Entities.AirDropType.AirdropComponentType.Form;
                 }
 
             }

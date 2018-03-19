@@ -89,6 +89,7 @@
     <Compile Include="Entities\AirDropForm.cs" />
     <Compile Include="Entities\AirDropLink.cs" />
     <Compile Include="Entities\AirdropTextbox.cs" />
+    <Compile Include="Entities\AirDropType\AirdropComponentType.cs" />
     <Compile Include="Entities\EImeceImageType.cs" />
     <Compile Include="Entities\EImeceItemType.cs" />
     <Compile Include="Entities\EImeceLanguage.cs" />
