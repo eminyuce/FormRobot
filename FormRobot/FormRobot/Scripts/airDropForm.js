@@ -1,6 +1,7 @@
 ﻿
 $(document).ready(function () {
     $("#GetAirDropForm").click(function () {
+        $("#airDropHtmlPage").html("<h3>WAIT A SECOND PLEASE<h3>");
         var airDropLink = $("#airDropLinkTxt").val();
         var postData = JSON.stringify({ "airDropLink": airDropLink });
         ajaxMethodCall(postData, "/Home/GetAirDropHtmlPage", function (data) {

@@ -48,7 +48,7 @@ namespace FormRobot.Domain.DB
                     }
                 }
             }
-            return null;
+            return new AirDropLink();
         }
 
         public static List<AirDropLink> GetAirDropLinks()

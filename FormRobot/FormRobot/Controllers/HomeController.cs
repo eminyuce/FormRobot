@@ -15,12 +15,14 @@ namespace FormRobot.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int id=0)
         {
             //Arrange
             //Airdrop table storing URLs
             // User  
 
+            var item = AirDropLinkRepository.GetAirDropLink(id);
+            ViewBag.AirDropUrl = item.AirDropLinkUrl.ToStr().Trim();
             return View();
         }
         public ActionResult AirDropLinkPage()
@@ -100,6 +102,10 @@ namespace FormRobot.Controllers
         }
         public ActionResult GetAirDropHtmlPage(string airDropLink)
         {
+            if (String.IsNullOrEmpty(airDropLink))
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
             var newAirDropHtml = new AirDropForm();
             newAirDropHtml.AirDropUrl = airDropLink;
             var myFormData = new UserFormData();

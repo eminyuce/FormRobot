@@ -1,9 +1,11 @@
-﻿ 
+﻿@using EImece.Domain.Helpers
 @{
     ViewBag.Title = "Home Page";
+    var p = (string)ViewBag.AirDropUrl;
+    var AirDropUrl =  p.ToStr();
 }
 <br />
-<button type="button" id="GetAirDropForm">Fill OUT Air Drop Form </button>
-<input type="text" id="airDropLinkTxt"/>
+<button type="button"  id="GetAirDropForm">Fill OUT Air Drop Form </button>
+<input type="text" style="width:100%" value="@AirDropUrl" id="airDropLinkTxt"/>
 <br>
 <span id="airDropHtmlPage"></span>
