@@ -5,12 +5,13 @@
 }
 
 <h2>Key Word Matching</h2>
-<b style="color:red; font-size:x-large">
-    Keyword user data matching table <br />
-    Matching of textfield and its value is done with FormItemText and FormItemKey<br />
-    No matching is found, it will keep blank<br />
-    For example : "ERC-20 wallet address" FormItemText is actually "EthWalletAddress" keyword.
-    FormItemText might be different text for each google doc but the meaning of it will be just one.
+<b style="color:red;">
+    Following matching table will be used to match airdrop form inputs with user data.<br />
+    "FormItemText" is the text displayed in airdrop form for an input.<br />
+    "FormItemKey" is the key used to refer to an input in airdrop form.<br />
+    If no match is found for specific field, it will be left blank<br />
+    For example : FormItemText is "ERC-20 wallet address" and  FormItemKey  is "EthWalletAddress". "EthWalletAddress" will be used to refer to this input.<br />
+    Different FormItemText values may be used for a single FormItemKey.<br />
 </b>
 <p>
     @Html.ActionLink("Create New", "FormMatchItem",null,new { @class="btn btn-info" })
