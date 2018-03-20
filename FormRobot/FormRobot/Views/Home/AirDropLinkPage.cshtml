@@ -11,8 +11,12 @@
             @Html.DisplayNameFor(model => model.AirDropLinkUrl)
         </th>
         <th>
-            Action
+             
         </th>
+        <th>
+            
+        </th>
+     
     </tr>
 
     @foreach (var item in Model)
@@ -23,6 +27,9 @@
             </td>
             <td>
                 @Html.ActionLink("APPLY","Index",new { @id = item.AirDropLinkId },new { @class="btn btn-default" })
+            </td>
+            <td>
+                @item.CreatedDateTime.ToShortDateString()
             </td>
         </tr>
     }

@@ -6,10 +6,11 @@
 
 <h2>Key Word Matching</h2>
 <b style="color:red; font-size:x-large">
-    Anahtar kelime ile kullanici datasi ESLESTIRME tablosu <br />
-    Eslestirme UserData her bir veri ile FormItemText arasinda yapiliyor.<br />
-    Eger tabloda yok ise elestirme gerceklesmiyor.<br />
-    Ornek olarak : "ERC-20 wallet address" FormItemText aslinda "EthWalletAddress" anahtar kelimesi.
+    Keyword user data matching table <br />
+    Matching of textfield and its value is done with FormItemText and FormItemKey<br />
+    No matching is found, it will keep blank<br />
+    For example : "ERC-20 wallet address" FormItemText is actually "EthWalletAddress" keyword.
+    FormItemText might be different text for each google doc but the meaning of it will be just one.
 </b>
 <p>
     @Html.ActionLink("Create New", "FormMatchItem",null,new { @class="btn btn-info" })

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "FormMatchItem";
+    var selectedItems = (List<SelectListItem>) ViewBag.SearchFields;
 }
 
 <h2>FormMatchItem</h2>
@@ -28,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FormItemKey, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FormItemKey, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.FormItemKey, selectedItems,  new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.FormItemKey, "", new { @class = "text-danger" })
             </div>
         </div>

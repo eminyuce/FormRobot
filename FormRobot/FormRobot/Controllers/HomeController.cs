@@ -43,7 +43,7 @@ namespace FormRobot.Controllers
         {
             var pe = new FormMatch();
 
-            {
+            
                 if (id == 0)
                 {
 
@@ -52,8 +52,22 @@ namespace FormRobot.Controllers
                 {
                     pe = FormMatchRepository.GetFormMatch(id);
                 }
-                return View(pe);
+
+            // Get one instance and then iterate all the properties
+            var selectListItems = new List<SelectListItem>();
+            var emptyObj = new UserFormData();
+            foreach (var item in emptyObj.GetType().GetProperties())
+            {
+                if (!item.Name.Equals("UserId"))
+                {
+                    selectListItems.Add(new SelectListItem() { Value = item.Name, Text = item.Name });
+                }
             }
+
+            ViewBag.SearchFields = selectListItems;
+
+            return View(pe);
+           
         }
         [HttpPost]
         public ActionResult FormMatchItem(FormMatch model)
@@ -64,19 +78,19 @@ namespace FormRobot.Controllers
         public ActionResult UserData()
         {
             var emptyObj = new UserFormData();
-            emptyObj.EthWalletAddress = "EthWalletAddress";
-            emptyObj.BitcointalkProfileURL = "Bitcointalk Profile URL";
-            emptyObj.TelegramUsername = "Telegram Username";
-            emptyObj.BitcointalkUsername = "Bitcointalk User name";
-            emptyObj.PersonalEmailAddress = "Personal Email Address";
-            emptyObj.FacebookName = "Facebook Name";
-            emptyObj.MediumProfileURL = "Medium Profile URL";
-            emptyObj.FacebookProfileURL = "Facebook Profile URL";
-            emptyObj.TwitterUsername = "Twitter Username";
-            emptyObj.TwitterProfileURL = "Twitter Profile URL";
-            emptyObj.YourSkills = "Your Skills";
-            emptyObj.YourLanguage = "Your Language";
-            emptyObj.YourHelps = "Your Helps";
+            emptyObj.EthWalletAddress = "";
+            emptyObj.BitcointalkProfileURL = "";
+            emptyObj.TelegramUsername = "";
+            emptyObj.BitcointalkUsername = "";
+            emptyObj.PersonalEmailAddress = "";
+            emptyObj.FacebookName = "";
+            emptyObj.MediumProfileURL = "";
+            emptyObj.FacebookProfileURL = "";
+            emptyObj.TwitterUsername = "";
+            emptyObj.TwitterProfileURL = "";
+            emptyObj.YourSkills = "";
+            emptyObj.YourLanguage = "";
+            emptyObj.YourHelps = "";
 
 
             var emptyObjXml = XmlParserHelper.ToXml<UserFormData>(emptyObj);

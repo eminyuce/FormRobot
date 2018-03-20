@@ -5,15 +5,16 @@
     ViewBag.Title = "UserData";
 }
 
-<h2>UserData</h2>
-
+<h2>Your Form Data</h2>
+<b style="color:red; font-size:x-large">
+    The app will be using these below data to fill out airdrop
+</b>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>UserProfile</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserId)
@@ -66,14 +67,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MediumProfileURL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediumProfileURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediumProfileURL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.FacebookProfileURL, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FacebookProfileURL, new { htmlAttributes = new { @class = "form-control" } })
@@ -81,6 +74,14 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.MediumProfileURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediumProfileURL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MediumProfileURL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+   
         <div class="form-group">
             @Html.LabelFor(model => model.TwitterUsername, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -96,7 +97,13 @@
                 @Html.ValidationMessageFor(model => model.TwitterProfileURL, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.TwitterFollowerCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TwitterFollowerCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TwitterFollowerCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.YourLanguage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

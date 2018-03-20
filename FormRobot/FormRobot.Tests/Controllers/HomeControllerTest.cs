@@ -35,7 +35,7 @@ namespace FormRobot.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            string url = "https://docs.google.com/forms/d/e/1FAIpQLSewSjh96ZhRqi-In85XYd0rW0_79fXfk_0VO7RpYtoO-aV97g/viewform";
+            string url = "https://docs.google.com/forms/d/e/1FAIpQLSf3LM5k6PI98HZgzjhvYadF_fbxQRdM6cZzATVQWaLtiuoXnw/viewform";
             var myFormData = new UserFormData();
             myFormData.EthWalletAddress = "0x75E352B05d54313358204877496F39b00016c62e";
             myFormData.BitcointalkProfileURL = "guvenulu";

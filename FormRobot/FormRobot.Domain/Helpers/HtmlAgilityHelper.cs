@@ -65,10 +65,14 @@ namespace FormRobot.Domain.Helpers
                     if (currentNode.Attributes.Any(t => t.Name.Equals("aria-label")))
                     {
                         //, UserFormData userData
-                        string label = currentNode.Attributes["aria-label"].Value.ToStr();
+                        string label = currentNode.Attributes["aria-label"].Value.ToStr().Trim();
                     
                   
                         var item = allFormKeyItems.FirstOrDefault(r => label.ToLower().Contains(r.FormItemText.ToLower()));
+                        if (item == null)
+                        {
+                            item = allFormKeyItems.FirstOrDefault(r => r.FormItemText.ToLower().Contains(label.ToLower()));
+                        }
                         if (item != null)
                         {
                             var property = myFormData.GetType().GetProperty(item.FormItemKey.ToStr().Trim());

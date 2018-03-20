@@ -88,6 +88,7 @@ namespace FormRobot.Domain.DB
 
             item.AirDropLinkId = dr["AirDropLinkId"].ToInt();
             item.AirDropLinkUrl = dr["AirDropLinkUrl"].ToStr();
+            item.CreatedDateTime = dr["CreatedDateTime"].ToDateTime();
             return item;
         }
 
@@ -131,7 +132,7 @@ namespace FormRobot.Domain.DB
         public static List<FormMatch> GetFormMatchs()
         {
             var list = new List<FormMatch>();
-            String commandText = @"SELECT * FROM FormMatch ORDER BY FormMatchId DESC";
+            String commandText = @"SELECT * FROM FormMatch ORDER BY FormItemKey DESC";
             var parameterList = new List<SqlParameter>();
             string connectionString = ConfigurationManager.ConnectionStrings[ConnectionStringKey].ConnectionString;
             var commandType = CommandType.Text;
