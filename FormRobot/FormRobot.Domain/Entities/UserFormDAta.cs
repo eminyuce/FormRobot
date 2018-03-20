@@ -35,6 +35,10 @@ namespace FormRobot.Domain.Entities
         public String TwitterFollowerCount { get; set; }
         [Display(Name = "Twitter Profile URL")]
         public String TwitterProfileURL { get; set; }
+        [Display(Name = "Reddit Username")]
+        public String RedditUsername { get; set; }
+        [Display(Name = "Reddit Profile")]
+        public String RedditProfile { get; set; }
         [Display(Name = "Your Language")]
         public String YourLanguage { get; set; }
         [Display(Name = "Your Skills")]
