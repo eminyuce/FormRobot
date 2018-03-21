@@ -5,21 +5,76 @@ using FormRobot.Domain.Entities.AirDropType;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FormRobot.Domain.Helpers
 {
+
+
     public class HtmlAgilityHelper
     {
+        public static List<String> GetGoogleSearch()
+        {
+            String SearchResults = "https://www.google.com/search?q=site:https://docs.google.com/forms/d/+airdrop&source=lnt&tbs=qdr:w&sa=X&ved=0ahUKEwji4YjAt_7ZAhWSxFkKHfuDDecQpwUIIA&biw=1280&bih=669";
+            var resultList = new List<String>();
+            resultList.AddRange(GetGoogleDriveLinks(SearchResults));
+            SearchResults = "https://www.google.com/search?q=site:https://docs.google.com/forms/d/+bounty&source=lnt&tbs=qdr:m&sa=X&ved=0ahUKEwiPoaeLvf7ZAhWPm1kKHSOrAuYQpwUIIA&biw=1280&bih=669";
+            resultList.AddRange(GetGoogleDriveLinks(SearchResults));
+            return resultList;
+        }
+        public static List<String> GetGoogleDriveLinks(string SearchResults)
+        {
+            var resultList = new List<String>();
+            try
+            {
+
+
+                StringBuilder sb = new StringBuilder();
+                byte[] ResultsBuffer = new byte[8192];
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(SearchResults);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                Stream resStream = response.GetResponseStream();
+                string tempString = null;
+                int count = 0;
+                do
+                {
+                    count = resStream.Read(ResultsBuffer, 0, ResultsBuffer.Length);
+                    if (count != 0)
+                    {
+                        tempString = Encoding.ASCII.GetString(ResultsBuffer, 0, count);
+                        sb.Append(tempString);
+                    }
+                }
+
+                while (count > 0);
+                string sbb = sb.ToString();
+
+
+                var inputString = sbb;
+                var regex = new Regex("<a [^>]*href=(?:'(?<href>.*?)')|(?:\"(?<href>.*?)\")", RegexOptions.IgnoreCase);
+                var urls = regex.Matches(inputString).OfType<Match>().Select(m => m.Groups["href"].Value);
+                return urls.ToList().Where(t => t.StartsWith("https://docs.google.com/forms/d/")).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return resultList;
+        }
         public static string GenerateFormData(string url, UserFormData userData)
         {
             var doc = new HtmlDocument();
             var htmlResult = DownloadHelper.GetStringFromUrl(url);
             doc.LoadHtml(htmlResult);
-     
 
+            var resultList = new List<string>();
             var ppp = new Dictionary<String, AirdropTextbox>();
 
             var fieldNodes = doc.DocumentNode.ChildNodes;
@@ -52,7 +107,7 @@ namespace FormRobot.Domain.Helpers
 
         public static void SearchInputForm(
             HtmlNodeCollection fieldNodes,
-            UserFormData myFormData, 
+            UserFormData myFormData,
             Dictionary<String, AirdropTextbox> myFormHtml)
         {
             var allFormKeyItems = FormMatchRepository.GetFormMatchsFromCache();
@@ -66,8 +121,8 @@ namespace FormRobot.Domain.Helpers
                     {
                         //, UserFormData userData
                         string label = currentNode.Attributes["aria-label"].Value.ToStr().Trim();
-                    
-                  
+
+
                         var item = allFormKeyItems.FirstOrDefault(r => label.ToLower().Contains(r.FormItemText.ToLower()));
                         if (item == null)
                         {
@@ -77,7 +132,7 @@ namespace FormRobot.Domain.Helpers
                         {
                             var property = myFormData.GetType().GetProperty(item.FormItemKey.ToStr().Trim());
                             string s = property.GetValue(myFormData, null) as string;
-                           // property.SetValue(myFormData, System.Convert.ChangeType(s.ToStr().Trim(), property.PropertyType), null);
+                            // property.SetValue(myFormData, System.Convert.ChangeType(s.ToStr().Trim(), property.PropertyType), null);
                             setFormValue(s.ToStr().Trim(), currentNode);
                         }
 
@@ -89,16 +144,16 @@ namespace FormRobot.Domain.Helpers
                         else
                         {
                             t.AirdropType = AirdropComponentType.Textarea;
-                        }  
-                    
+                        }
 
-                        myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value]  =t;
+
+                        myFormHtml["input_textbox_" + currentNode.Attributes["name"].Value] = t;
 
                     }
                     else
                     {
                         var t = new AirdropTextbox() { AirdropTextboxHtml = currentNode.OuterHtml };
-                        myFormHtml["input_others_" + currentNode.Attributes["name"].Value] =   t ;
+                        myFormHtml["input_others_" + currentNode.Attributes["name"].Value] = t;
                         t.AirdropType = Entities.AirDropType.AirdropComponentType.Hidden;
                     }
 
@@ -119,7 +174,7 @@ namespace FormRobot.Domain.Helpers
             {
                 currentNode.Attributes["value"].Value = myFormData;
             }
-            else if ( currentNode.Name == "textarea")
+            else if (currentNode.Name == "textarea")
             {
                 currentNode.InnerHtml = myFormData;
             }

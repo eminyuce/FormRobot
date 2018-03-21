@@ -116,6 +116,22 @@ namespace FormRobot.Controllers
             }
 
         }
+        public ActionResult GetGoogleSearch()
+        {
+            var searchResult = HtmlAgilityHelper.GetGoogleDriveLinks("site:https://docs.google.com/forms/d/ airdrop");
+            foreach (var s in searchResult)
+            {
+                Console.WriteLine(s);
+                AirDropLinkRepository.SaveOrUpdateAirDropLink
+                    (new AirDropLink()
+                    {
+                        AirDropLinkUrl = s.ToStr().Trim()
+                    });
+
+            }
+
+            return RedirectToAction("Index");
+        }
         public ActionResult GetAirDropHtmlPage(string airDropLink)
         {
             if (String.IsNullOrEmpty(airDropLink))

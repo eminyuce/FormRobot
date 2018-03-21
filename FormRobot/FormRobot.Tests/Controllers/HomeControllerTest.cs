@@ -10,6 +10,7 @@ using HtmlAgilityPack;
 using FormRobot.Domain.Helpers;
 using EImece.Domain.Helpers;
 using FormRobot.Domain.Entities;
+using FormRobot.Domain.DB;
 
 namespace FormRobot.Tests.Controllers
 {
@@ -19,14 +20,15 @@ namespace FormRobot.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            // Arrange
-            HomeController controller = new HomeController();
+            var searchResult = HtmlAgilityHelper.GetGoogleSearch();
+            foreach(var s in searchResult)
+            {
+                Console.WriteLine(s);
+                AirDropLinkRepository.SaveOrUpdateAirDropLink
+                    (new AirDropLink() {
+                        AirDropLinkUrl = s.ToStr().Trim() });
 
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
+            }
         }
 
       

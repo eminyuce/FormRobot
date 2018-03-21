@@ -6,9 +6,10 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="#" title="Manage">Hello @User.Identity.GetUserName()!</a>
-        </li>
+     
+        <li>@Html.ActionLink("Hello "+ @User.Identity.GetUserName()+"!", "GetGoogleSearch", "Home")</li>
+
+      
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
