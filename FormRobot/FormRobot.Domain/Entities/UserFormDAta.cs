@@ -31,12 +31,17 @@ namespace FormRobot.Domain.Entities
         public String FacebookName { get; set; }
         [Display(Name = "Facebook Profile URL")]
         public String FacebookProfileURL { get; set; }
+        [Display(Name = "Facebook Follower Count")]
+        public String FacebookFollowerCount { get; set; }
+
         [Display(Name = "Medium Profile URL")]
         public String MediumProfileURL { get; set; }
         [Display(Name = "Twitter Username")]
         public String TwitterUsername { get; set; }
         [Display(Name = "Twitter Follower Count")]
         public String TwitterFollowerCount { get; set; }
+        [Display(Name = "Tweeter Audit Link")]
+        public String TweeterAuditLink { get; set; }
         [Display(Name = "Twitter Profile URL")]
         public String TwitterProfileURL { get; set; }
         [Display(Name = "Reddit Username")]
@@ -44,16 +49,10 @@ namespace FormRobot.Domain.Entities
         [Display(Name = "Reddit Profile")]
         public String RedditProfile { get; set; }
 
-        [Display(Name = "Tweeter Audit Link")]
-        public String TweeterAuditLink { get; set; }
-        [Display(Name = "Tweeter Follower Number")]
-        public String TweeterFollowerNumber { get; set; }
+   
         [Display(Name = "Youtube Publication Link")]
         public String YoutubePublicationLink { get; set; }
-        [Display(Name = "Facebook Follower Count")]
-        public String FacebookFollowerCount { get; set; }
-        [Display(Name = "Facebook Profile Link")]
-        public String FacebookProfileLink { get; set; }
+      
         [Display(Name = "Telegram Group Link")]
         public String TelegramGroupLink { get; set; }
 
