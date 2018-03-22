@@ -32,7 +32,7 @@ namespace FormRobot.Controllers
         }
         public ActionResult FormMatchs(string search="")
         {
-            var formMatches = FormMatchRepository.GetFormMatchs();
+            var formMatches = FormMatchRepository.GetFormMatchsFromCache();
             if (!String.IsNullOrEmpty(search))
             {
                 formMatches = formMatches.Where(t => t.FormItemText.ToLower().Contains(search.ToLower())).ToList();
@@ -43,32 +43,27 @@ namespace FormRobot.Controllers
         {
             var pe = new FormMatch();
 
-            
-                if (id == 0)
-                {
 
-                }
-                else
-                {
-                    pe = FormMatchRepository.GetFormMatch(id);
-                }
+            if (id == 0)
+            {
+
+            }
+            else
+            {
+                pe = FormMatchRepository.GetFormMatch(id);
+            }
 
             // Get one instance and then iterate all the properties
-            var selectListItems = new List<SelectListItem>();
-            var emptyObj = new UserFormData();
-            foreach (var item in emptyObj.GetType().GetProperties())
-            {
-                if (!item.Name.Equals("UserId"))
-                {
-                    selectListItems.Add(new SelectListItem() { Value = item.Name, Text = item.Name });
-                }
-            }
+            List<SelectListItem> selectListItems = FormMatchRepository.GenerateUserDataDropDownItems();
 
             ViewBag.SearchFields = selectListItems;
 
             return View(pe);
-           
+
         }
+
+      
+
         [HttpPost]
         public ActionResult FormMatchItem(FormMatch model)
         {
@@ -78,21 +73,6 @@ namespace FormRobot.Controllers
         public ActionResult UserData()
         {
             var emptyObj = new UserFormData();
-            emptyObj.EthWalletAddress = "";
-            emptyObj.BitcointalkProfileURL = "";
-            emptyObj.TelegramUsername = "";
-            emptyObj.BitcointalkUsername = "";
-            emptyObj.PersonalEmailAddress = "";
-            emptyObj.FacebookName = "";
-            emptyObj.MediumProfileURL = "";
-            emptyObj.FacebookProfileURL = "";
-            emptyObj.TwitterUsername = "";
-            emptyObj.TwitterProfileURL = "";
-            emptyObj.YourSkills = "";
-            emptyObj.YourLanguage = "";
-            emptyObj.YourHelps = "";
-
-
             var emptyObjXml = XmlParserHelper.ToXml<UserFormData>(emptyObj);
             using (var context = new UsersContext())
             {

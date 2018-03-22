@@ -9,3 +9,22 @@
 <input type="text" placeholder="Air Drop Form Google Doc link." style="width:100%" value="@AirDropUrl" id="airDropLinkTxt"/>
 <br><br>
 <span id="airDropHtmlPage"></span>
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+                console.log("asdfasdf");
+                $('input[aria-label]').each(function () {
+                    var label = $(this).attr('aria-label');
+                    console.log(label);
+                });
+            });
+        });
+
+    </script>
+   
+
+
+    }

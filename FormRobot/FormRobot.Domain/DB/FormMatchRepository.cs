@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace FormRobot.Domain.DB
 {
@@ -13,6 +14,30 @@ namespace FormRobot.Domain.DB
     {
         private static string CacheKeyAllItems = "FormMatchCache";
 
+      
+        public static List<SelectListItem> GenerateUserDataDropDownItems()
+        {
+            var key = "UserDataDropDownItems";
+            var selectListItems = (List<SelectListItem>)MemoryCache.Default.Get(key);
+            if (selectListItems == null)
+            {
+                selectListItems = new List<SelectListItem>();
+                var emptyObj = new UserFormData();
+                foreach (var item in emptyObj.GetType().GetProperties())
+                {
+                    if (!item.Name.Equals("UserId"))
+                    {
+                        selectListItems.Add(new SelectListItem() { Value = item.Name, Text = item.Name });
+                    }
+                }
+                CacheItemPolicy policy = null;
+                policy = new CacheItemPolicy();
+                policy.Priority = CacheItemPriority.Default;
+                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(Settings.CacheMediumSeconds);
+                MemoryCache.Default.Set(key, selectListItems, policy);
+            }
+            return selectListItems;
+        }
         public static List<FormMatch> GetFormMatchsFromCache()
         {
             var items = (List<FormMatch>)MemoryCache.Default.Get(CacheKeyAllItems);

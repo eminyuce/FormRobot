@@ -70,17 +70,37 @@ namespace FormRobot.Domain.Helpers
         }
         public static string GenerateFormData(string url, UserFormData userData)
         {
-            var doc = new HtmlDocument();
-            var htmlResult = DownloadHelper.GetStringFromUrl(url);
-            doc.LoadHtml(htmlResult);
 
+            WebClient webClient = new WebClient();
+            var htmlResult = webClient.DownloadString(url); //DownloadHelper.GetStringFromUrl(url);
             var resultList = new List<string>();
             var ppp = new Dictionary<String, AirdropTextbox>();
-
-            var fieldNodes = doc.DocumentNode.ChildNodes;
-            HtmlAgilityHelper.SearchInputForm(fieldNodes, userData, ppp);
-            var docForm = new HtmlDocument();
             String formHtml = "";
+            Match match = Regex.Match(htmlResult, @"<form[^>]*>(.*?)</form>",RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            if (match.Success)
+            {
+                // fetch result
+                formHtml = match.Groups[0].Value;
+               
+            }
+            String inputRegexResult = "";
+            Match match2 = Regex.Match(htmlResult, @"<input[^>]*>(.*?)/>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            if (match2.Success)
+            {
+                // fetch result
+                inputRegexResult = match2.Groups[0].Value;
+            }
+            var doc = new HtmlDocument();
+            formHtml = Regex.Replace(formHtml, @"\t|\n|\r", "");
+            doc.LoadHtml(formHtml);
+            //  <form[^>]*>(.*?)</form>
+            //  var inputNodes = doc.DocumentNode.SelectNodes("//input");
+            //    var textareaNodes = doc.DocumentNode.SelectNodes("//textarea");
+            //    var formNodes = doc.DocumentNode.SelectNodes("//form");
+            formHtml = "";
+            HtmlAgilityHelper.SearchInputForm(doc.DocumentNode.ChildNodes, userData, ppp);
+            var docForm = new HtmlDocument();
+
             foreach (var key in ppp.Keys)
             {
                 if (key.StartsWith("input"))
@@ -113,8 +133,18 @@ namespace FormRobot.Domain.Helpers
             var allFormKeyItems = FormMatchRepository.GetFormMatchsFromCache();
             foreach (var currentNode in fieldNodes)
             {
+
+                if (currentNode.NextSibling != null)
+                {
+                    SearchInputForm(currentNode.NextSibling.ChildNodes, myFormData, myFormHtml);
+                }
+                if (currentNode.PreviousSibling != null)
+                {
+                    SearchInputForm(currentNode.PreviousSibling.ChildNodes, myFormData, myFormHtml);
+                }
                 SearchInputForm(currentNode.ChildNodes, myFormData, myFormHtml);
-                if (currentNode.Name == "input" || currentNode.Name == "textarea")
+                if (currentNode.Name.Equals("input",StringComparison.InvariantCultureIgnoreCase)
+                    || currentNode.Name.Equals("textarea", StringComparison.InvariantCultureIgnoreCase))
                 {
 
                     if (currentNode.Attributes.Any(t => t.Name.Equals("aria-label")))
