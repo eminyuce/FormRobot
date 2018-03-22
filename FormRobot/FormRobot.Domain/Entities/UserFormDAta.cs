@@ -12,7 +12,11 @@ namespace FormRobot.Domain.Entities
     public class UserFormData
     {
         [XmlIgnore]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int UserId { get; set; }
+
+        [Display(Name = "Full Name")]
+        public String YourFullName { get; set; }
         [Display(Name = "Eth Wallet Address")]
         public String EthWalletAddress { get; set; }
         [Display(Name = "Bitcointalk Profile URL")]
@@ -39,6 +43,21 @@ namespace FormRobot.Domain.Entities
         public String RedditUsername { get; set; }
         [Display(Name = "Reddit Profile")]
         public String RedditProfile { get; set; }
+
+        [Display(Name = "Tweeter Audit Link")]
+        public String TweeterAuditLink { get; set; }
+        [Display(Name = "Tweeter Follower Number")]
+        public String TweeterFollowerNumber { get; set; }
+        [Display(Name = "Youtube Publication Link")]
+        public String YoutubePublicationLink { get; set; }
+        [Display(Name = "Facebook Follower Count")]
+        public String FacebookFollowerCount { get; set; }
+        [Display(Name = "Facebook Profile Link")]
+        public String FacebookProfileLink { get; set; }
+        [Display(Name = "Telegram Group Link")]
+        public String TelegramGroupLink { get; set; }
+
+
         [Display(Name = "Your Language")]
         public String YourLanguage { get; set; }
         [Display(Name = "Your Skills")]
