@@ -11,5 +11,6 @@ namespace FormRobot.Domain.Entities
         public int AirDropLinkId { get; set; }
         public string AirDropLinkUrl { get; set; }
         public DateTime CreatedDateTime { get; set; }
+        public bool IsDeleted { get;  set; }
     }
 }

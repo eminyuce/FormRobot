@@ -9,13 +9,14 @@ using EImece.Domain.Helpers;
 using FormRobot.Models;
 using HelpersProject;
 using FormRobot.Domain.DB;
+using System.Threading.Tasks;
 
 namespace FormRobot.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index(int id=0)
+        public ActionResult Index(int id = 0)
         {
             //Arrange
             //Airdrop table storing URLs
@@ -25,12 +26,24 @@ namespace FormRobot.Controllers
             ViewBag.AirDropUrl = item.AirDropLinkUrl.ToStr().Trim();
             return View();
         }
-        public ActionResult AirDropLinkPage()
+        public ActionResult DeleteAirDropLink(int id = 0)
         {
-            var items = AirDropLinkRepository.GetAirDropLinks();
-            return View(items);
+            var item = AirDropLinkRepository.GetAirDropLink(id);
+            item.IsDeleted = true;
+            AirDropLinkRepository.SaveOrUpdateAirDropLink(item);
+            return RedirectToAction("AirDropLinkPage");
         }
-        public ActionResult FormMatchs(string search="")
+        public ActionResult AirDropLinkPage(bool isAll = false)
+        {
+            var items = AirDropLinkRepository.GetAirDropLinksFromCache();
+            var goodOnes = items.Where(t => !t.IsDeleted).ToList();
+            if (isAll)
+            {
+                goodOnes = items;
+            }
+            return View(goodOnes);
+        }
+        public ActionResult FormMatchs(string search = "")
         {
             var formMatches = FormMatchRepository.GetFormMatchsFromCache();
             if (!String.IsNullOrEmpty(search))
@@ -62,7 +75,7 @@ namespace FormRobot.Controllers
 
         }
 
-      
+
 
         [HttpPost]
         public ActionResult FormMatchItem(FormMatch model)
@@ -85,7 +98,7 @@ namespace FormRobot.Controllers
 
         }
         [HttpPost]
-        public ActionResult UserData(UserFormData profile, int id=0)
+        public ActionResult UserData(UserFormData profile, int id = 0)
         {
             using (var context = new UsersContext())
             {
@@ -98,17 +111,23 @@ namespace FormRobot.Controllers
         }
         public ActionResult GetGoogleSearch()
         {
-            var searchResult = HtmlAgilityHelper.GetGoogleDriveLinks("site:https://docs.google.com/forms/d/ airdrop");
-            foreach (var s in searchResult)
+            Task.Factory.StartNew(() =>
             {
-                Console.WriteLine(s);
-                AirDropLinkRepository.SaveOrUpdateAirDropLink
-                    (new AirDropLink()
-                    {
-                        AirDropLinkUrl = s.ToStr().Trim()
-                    });
 
-            }
+                var searchResult = HtmlAgilityHelper.GetGoogleDriveLinks("site:https://docs.google.com/forms/d/ airdrop");
+                foreach (var s in searchResult)
+                {
+                    Console.WriteLine(s);
+                    AirDropLinkRepository.SaveOrUpdateAirDropLink
+                        (new AirDropLink()
+                        {
+                            AirDropLinkUrl = s.ToStr().Trim()
+                        });
+
+                }
+
+            });
+
 
             return RedirectToAction("Index");
         }
@@ -127,10 +146,11 @@ namespace FormRobot.Controllers
                 myFormData = XmlParserHelper.ToObject<UserFormData>(user.UserData);
             }
 
-            AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim() });
+            int airdropId = AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim() });
             newAirDropHtml.myFormData = myFormData;
 
             var tempData = new TempDataDictionary();
+            tempData["airdropId"] = airdropId;
             var html = this.RenderPartialToString(
                         @"~/Views/Shared/pAirDropForm.cshtml",
                         new ViewDataDictionary(newAirDropHtml), tempData);

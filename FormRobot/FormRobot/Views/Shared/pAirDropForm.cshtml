@@ -1,8 +1,20 @@
 ﻿@model  FormRobot.Domain.Entities.AirDropForm
- 
+ @using EImece.Domain.Helpers
+@{ 
+    var airdropId = TempData["airdropId"].ToInt();
+}
 
 @Html.Raw(Model.AirDropFormHtml)
 
 
+<br />
+@Html.ActionLink("DELETE AIRDROP LINK FROM DATABASE",
+               "DeleteAirDropLink",
+               new { @id = airdropId },
+               new
+               {
+                   @onclick = "confirm('do you want to delete?')",
+                   @class = "btn btn-danger"
+               })
 <br />
 <iframe id="iframeId"  width="100%" height="1000px" src="@Model.AirDropUrl"></iframe>

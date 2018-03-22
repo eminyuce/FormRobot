@@ -24,6 +24,7 @@ namespace FormRobot.Domain.DB
             var parameterList = new List<SqlParameter>();
             var commandType = CommandType.StoredProcedure;
             parameterList.Add(DatabaseUtility.GetSqlParameter("airdroplinkid", item.AirDropLinkId, SqlDbType.Int));
+            parameterList.Add(DatabaseUtility.GetSqlParameter("IsDeleted", item.IsDeleted, SqlDbType.Bit));
             parameterList.Add(DatabaseUtility.GetSqlParameter("airdroplinkurl", item.AirDropLinkUrl.ToStr(), SqlDbType.NVarChar));
             int id = DatabaseUtility.ExecuteScalar(new SqlConnection(connectionString), commandText, commandType, parameterList.ToArray()).ToInt();
             return id;
@@ -85,7 +86,7 @@ namespace FormRobot.Domain.DB
         private static AirDropLink GetAirDropLinkFromDataRow(DataRow dr)
         {
             var item = new AirDropLink();
-
+            item.IsDeleted = dr["IsDeleted"].ToBool();
             item.AirDropLinkId = dr["AirDropLinkId"].ToInt();
             item.AirDropLinkUrl = dr["AirDropLinkUrl"].ToStr();
             item.CreatedDateTime = dr["CreatedDateTime"].ToDateTime();
