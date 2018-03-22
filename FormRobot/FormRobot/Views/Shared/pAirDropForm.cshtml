@@ -7,14 +7,14 @@
 @Html.Raw(Model.AirDropFormHtml)
 
 
-<br />
+@*<br />
 @Html.ActionLink("DELETE AIRDROP LINK FROM DATABASE",
                "DeleteAirDropLink",
-               new { @id = airdropId },
+               new { @id = Model.AirDropId },
                new
                {
                    @onclick = "confirm('do you want to delete?')",
                    @class = "btn btn-danger"
-               })
+               })*@
 <br />
 <iframe id="iframeId"  width="100%" height="1000px" src="@Model.AirDropUrl"></iframe>

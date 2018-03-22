@@ -12,7 +12,7 @@ namespace FormRobot.Domain.Entities
         public UserFormData myFormData { get; set; }
 
         public string AirDropUrl { get; set; }
-
+        public int AirDropId { get; set; }
         public string AirDropFormHtml
         {
             get

@@ -146,9 +146,9 @@ namespace FormRobot.Controllers
                 myFormData = XmlParserHelper.ToObject<UserFormData>(user.UserData);
             }
 
-            int airdropId = AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim() });
+            int airdropId = AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim(), IsDeleted=false });
             newAirDropHtml.myFormData = myFormData;
-
+            newAirDropHtml.AirDropId = airdropId;
             var tempData = new TempDataDictionary();
             tempData["airdropId"] = airdropId;
             var html = this.RenderPartialToString(
