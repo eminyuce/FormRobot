@@ -100,6 +100,16 @@ namespace FormRobot.Controllers
         [HttpPost]
         public ActionResult UserData(UserFormData profile, int id = 0)
         {
+            if (String.IsNullOrEmpty(profile.YourFullName.ToStr().Trim()))
+            {
+                ModelState.AddModelError("YourFullName", "FullName is required.");
+                return View(profile);
+            }
+            if (String.IsNullOrEmpty(profile.EthWalletAddress.ToStr().Trim()))
+            {
+                ModelState.AddModelError("EthWalletAddress", "Eth Wallet Address is required.");
+                return View(profile);
+            }
             using (var context = new UsersContext())
             {
                 var user = context.UserProfiles.FirstOrDefault(t => t.UserId == profile.UserId);
@@ -143,7 +153,10 @@ namespace FormRobot.Controllers
             using (var context = new UsersContext())
             {
                 var user = context.UserProfiles.FirstOrDefault(t => t.UserName.Equals(User.Identity.Name));
-                myFormData = XmlParserHelper.ToObject<UserFormData>(user.UserData);
+                if (!String.IsNullOrEmpty(myFormData.EthWalletAddress))
+                {
+                    myFormData = XmlParserHelper.ToObject<UserFormData>(user.UserData);
+                }
             }
 
             int airdropId = AirDropLinkRepository.SaveOrUpdateAirDropLink(new AirDropLink() { AirDropLinkUrl = airDropLink.ToStr().Trim(), IsDeleted=false });

@@ -16,8 +16,10 @@ namespace FormRobot.Domain.Entities
         public int UserId { get; set; }
 
         [Display(Name = "Full Name")]
+        [Required(ErrorMessage ="Full Name is required")]
         public String YourFullName { get; set; }
         [Display(Name = "Eth Wallet Address")]
+        [Required(ErrorMessage = "ETH WALLET is required")]
         public String EthWalletAddress { get; set; }
         [Display(Name = "Bitcointalk Profile URL")]
         public String BitcointalkProfileURL { get; set; }

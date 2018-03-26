@@ -33,6 +33,7 @@ namespace HelpersProject
 
         public static T ToObject<T>(string xmlTextToParse) where T : class, new()
         {
+             
             if (string.IsNullOrEmpty(xmlTextToParse))
                 throw new Exception("Invalid string input. Cannot parse an empty or null string.", new ArgumentException("xmlTestToParse"));
 
